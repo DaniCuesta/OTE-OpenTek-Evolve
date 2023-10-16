@@ -17,6 +17,6 @@ spec:
     output: 
       to:
         kind: DockerImage
-        name: quay.io/danicuestam/ubuntu-hello:latest # Reemplaza con la URL de tu repositorio en Quay.io
+        name: quay.io/danicuestam/ubuntu-hello:${VERSION} # Reemplaza con la URL de tu repositorio en Quay.io
   postCommit: {}
   resources: {}

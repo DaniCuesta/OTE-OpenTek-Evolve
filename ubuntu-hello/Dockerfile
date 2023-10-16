@@ -4,6 +4,9 @@ FROM ubuntu:latest
 # Etiqueta de información sobre el autor
 LABEL maintainer="DaniC"
 
+# Calcula la versión basada en la fecha y hora actual
+ENV VERSION=$(date +"%Y%m%d%H%M%S")
+
 # Copia un archivo de texto a la raíz del sistema de archivos
 COPY hello.txt /hello.txt
 
