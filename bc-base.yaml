@@ -1,0 +1,22 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: ubuntu-hello-push
+  labels:
+    app: ubuntu-hello
+spec:
+  source:
+    type: Git
+    git:
+      uri: https://github.com/DaniCuesta/docker-images.git
+    contextDir: ubuntu-hello
+  strategy:
+    type: Docker                      
+    dockerStrategy:
+      dockerfilePath: Dockerfile   
+    output: 
+      to:
+        kind: DockerImage
+        name: quay.io/danicuestam/ubuntu-hello:latest # Reemplaza con la URL de tu repositorio en Quay.io
+  postCommit: {}
+  resources: {}
