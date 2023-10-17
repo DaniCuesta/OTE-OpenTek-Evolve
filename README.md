@@ -58,7 +58,7 @@ Este repositorio utiliza webhooks triggers en OpenShift Container Platform (OCP)
 
 - Una vez que la construcción se completa con éxito, la imagen de contenedor resultante se almacena en el registro de contenedores especificado en el BC. Esto podría ser un registro externo como Quay.io.
 
-## 5. Implementación Continua:
+## 5. Integración Continua:
 
 - La imagen construida y almacenada está lista para su implementación en entornos de desarrollo, pruebas o producción, según sea necesario.
 
