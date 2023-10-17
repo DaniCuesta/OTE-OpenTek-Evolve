@@ -11,7 +11,7 @@ ENV VERSION=1.0
 RUN export VERSION=$(awk "BEGIN {print $VERSION + 0.1}")
 
 # Crea el archivo hello.txt directamente en la imagen
-RUN echo "Hola, Mundo" > /hello.txt
+RUN echo "Hello World !!" > /hello.txt
 
 # Comando a ejecutar cuando se inicie un contenedor basado en esta imagen
 CMD ["cat", "/hello.txt"]
