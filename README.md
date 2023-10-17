@@ -64,5 +64,3 @@ Este repositorio utiliza webhooks triggers en OpenShift Container Platform (OCP)
 
 Este flujo de trabajo automatizado asegura que cada vez que se realice un cambio en el repositorio de GitHub, OCP construirá automáticamente la imagen de contenedor correspondiente, lo que facilita la entrega continua de aplicaciones actualizadas.
 
-Si deseas contribuir a este proyecto o aprender más sobre cómo funciona, consulta la sección "Cómo Contribuir" en este archivo README.
-
