@@ -25,6 +25,3 @@ spec:
       github:
         secretReference:
           name: github-webhook-secret
-  secrets:
-    - secret:
-        secretName: quay-credentials
