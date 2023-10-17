@@ -5,7 +5,7 @@ FROM ubuntu:rolling
 LABEL maintainer="DaniC"
 
 # Definimos la versión inicial en el Dockerfile
-ENV VERSION=1.0
+ENV VERSION=2.0
 
 # Crea el archivo hello.txt directamente en la imagen
 RUN echo "Hello World !!" > /hello.txt
