@@ -20,7 +20,7 @@ spec:
     output:
       to:
         kind: DockerImage
-        name: quay.io/danicuestam/ubuntu-hello:${VERSION}  # Nombre de la imagen de Docker de salida con una etiqueta dinámica
+        name: quay.io/danicuestam/ubuntu-hello  # Nombre de la imagen de Docker de salida con una etiqueta dinámica
   postCommit: {}  # Acciones posteriores a la confirmación (vacías en este caso)
   resources: {}  # Recursos asignados para la construcción (vacíos en este caso)
   secrets:
