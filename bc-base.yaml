@@ -3,20 +3,29 @@ kind: BuildConfig
 metadata:
   name: ubuntu-hello-push
   labels:
-    app: ubuntu-hello
+    app: ubuntu-hello  # Etiqueta para identificar la aplicación relacionada
 spec:
   source:
     type: Git
     git:
-      uri: https://github.com/DaniCuesta/docker-images.git
-    contextDir: ubuntu-hello
+      uri: https://github.com/DaniCuesta/docker-images.git  # URL del repositorio Git fuente
+    contextDir: ubuntu-hello  # Directorio dentro del repositorio fuente que se utilizará para la construcción
+    # Agrega el secreto para clonar el repositorio (por ejemplo, un token de acceso)
+    sourceSecret:
+      name: github-credentials
   strategy:
-    type: Docker                      
+    type: Docker  # Estrategia de construcción basada en Docker
     dockerStrategy:
-      dockerfilePath: Dockerfile   
-    output: 
+      dockerfilePath: Dockerfile  # Ruta al archivo Dockerfile dentro del repositorio fuente
+    output:
       to:
         kind: DockerImage
-        name: quay.io/danicuestam/ubuntu-hello:${VERSION} # Reemplaza con la URL de tu repositorio en Quay.io
-  postCommit: {}
-  resources: {}
+        name: quay.io/danicuestam/ubuntu-hello:${VERSION}  # Nombre de la imagen de Docker de salida con una etiqueta dinámica
+  postCommit: {}  # Acciones posteriores a la confirmación (vacías en este caso)
+  resources: {}  # Recursos asignados para la construcción (vacíos en este caso)
+  secrets:
+    - name: quay-credentials
+
+
+
+
