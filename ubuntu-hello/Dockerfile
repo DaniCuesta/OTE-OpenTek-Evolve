@@ -1,5 +1,5 @@
 # Usamos una imagen base de Ubuntu
-FROM ubuntu:rolling
+FROM ubuntu:mantic
 
 # Etiqueta de información sobre el autor
 LABEL maintainer="DaniC"
