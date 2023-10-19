@@ -10,6 +10,6 @@ ENV VERSION=4.0
 # Crea el archivo hello.txt directamente en la imagen
 RUN echo "Hola mundooooo !!" > /hello.txt
 
-# Ejecuta un comando que se mantendrá en ejecución
-CMD ["tail", "-f", "/dev/null"]
+# Ejecuta cat con un límite de tiempo de 5 minutos
+CMD ["timeout", "5m", "cat", "/hello.txt"]
 
