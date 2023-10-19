@@ -5,7 +5,7 @@ FROM ubuntu:latest
 LABEL maintainer="DaniC"
 
 # Definimos la versión inicial en el Dockerfile
-ENV VERSION=3.0
+ENV VERSION=4.0
 
 # Crea el archivo hello.txt directamente en la imagen
 RUN echo "Hola mundooooo !!" > /hello.txt
