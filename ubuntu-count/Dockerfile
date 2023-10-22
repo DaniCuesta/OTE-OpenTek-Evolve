@@ -2,7 +2,7 @@
 FROM ubuntu:latest
 
 # Etiqueta de información sobre el autor
-LABEL maintainer="DaniC"
+LABEL maintainer="Dani C"
 
 # Definimos la versión inicial en el Dockerfile
 ENV VERSION=4.0
