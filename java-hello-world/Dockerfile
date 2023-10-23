@@ -1,5 +1,5 @@
 # Usa una imagen base con un entorno de compilación de Java (por ejemplo, OpenJDK)
-FROM openjdk-11-parent:1-17-2
+FROM openjdk-11:1.17-2
 
 # Establece el usuario root
 USER root
