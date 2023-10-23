@@ -1,5 +1,5 @@
 # Usa una imagen base con un entorno de compilación de Java (por ejemplo, OpenJDK)
-FROM registry.access.redhat.com/ubi8/openjdk-11:1.17-2
+FROM registry.access.redhat.com/ubi9/openjdk-17:1.16-1
 
 # Establece el usuario root
 USER root
