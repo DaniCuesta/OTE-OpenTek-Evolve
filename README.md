@@ -1,66 +1,42 @@
-# Repositorio de Ejemplo - Integración de GitHub con OpenShift y Quay.io
+# Repositorio Integrado con OpenShift Container Platform (OCP)
 
-Este repositorio tiene como objetivo demostrar cómo una acción push en este repositorio puede disparar un webhook que activa un BuildConfig en OpenShift. El BuildConfig se utilizará para construir una imagen de contenedor y depositarla en Quay.io.
+Este repositorio está configurado para integrarse con un clúster de OpenShift Container Platform (OCP) utilizando WebHooks de acción push. Esto permite automatizar el proceso de despliegue y actualización de aplicaciones en tu clúster OCP cada vez que realizas un push a este repositorio.
 
-## Objetivo
+## Configuración del WebHook
 
-El objetivo principal de este repositorio es ilustrar el flujo de trabajo de integración continua y entrega continua (CI/CD) utilizando las siguientes tecnologías:
+La integración con OCP se logra a través de un WebHook que desencadena la acción de despliegue en el clúster. A continuación, se describen los pasos para configurar esta integración:
 
-- **GitHub:** Este repositorio es alojado en GitHub y se utiliza como el sistema de control de versiones central para nuestro código fuente.
+1. **Configuración del Proyecto en OCP**: Asegúrate de tener un proyecto adecuado en tu clúster OCP para desplegar las aplicaciones desde este repositorio.
 
-- **OpenShift:** Utilizamos OpenShift para administrar nuestros despliegues y flujos de trabajo de CI/CD. Cuando se produce una acción push en este repositorio, un webhook activa un BuildConfig en OpenShift, lo que desencadena la construcción de una nueva imagen de contenedor.
+2. **Creación del WebHook en OCP**: En tu proyecto OCP, configura un WebHook de acción push que esté asociado con este repositorio. Asegúrate de proporcionar la URL del WebHook al repositorio para que se dispare una acción de despliegue en cada push.
 
-- **Quay.io:** La imagen de contenedor resultante se almacena en Quay.io, un registro de contenedores confiable y seguro.
+3. **Configuración de Secretos**: Si es necesario, configura secretos u otros parámetros específicos que tu aplicación pueda requerir en tu proyecto de OCP.
 
-## Flujo de Trabajo
+## Uso
 
-# Flujo de Trabajo de Webhooks Triggers en OCP para Construir Imágenes desde GitHub
+Una vez configurado el WebHook, el proceso de uso es bastante simple:
 
-Este repositorio utiliza webhooks triggers en OpenShift Container Platform (OCP) para automatizar la construcción de una imagen de contenedor a partir de un Dockerfile alojado en un repositorio de GitHub. A continuación se detalla el flujo de trabajo:
+1. Realiza cambios en tu código fuente o configuración de la aplicación en este repositorio.
 
-## 1. Configuración Inicial:
+2. Haz un push a este repositorio en la rama o rutas específicas configuradas para el despliegue.
 
-### a. Creación del BuildConfig (BC):
+3. El WebHook configurado detectará el push y desencadenará la acción de despliegue en tu clúster OCP.
 
-- En OCP, se crea un BuildConfig que define cómo se debe construir la imagen de contenedor. El BC incluye información sobre el origen del código fuente, las instrucciones de construcción y el registro de contenedores de destino.
+4. Monitorea el estado del despliegue y las actualizaciones en el proyecto de OCP.
 
-### b. Configuración del Webhook Trigger:
+## Notas Adicionales
 
-- Dentro de la configuración del BC, se establece un webhook trigger que se asocia con un evento específico. En este caso, el evento estará relacionado con cambios en el repositorio de GitHub.
+- Asegúrate de que tu clúster OCP tenga la capacidad de recibir WebHooks. Esto puede requerir configuraciones específicas en tu clúster.
 
-## 2. Configuración en GitHub:
+- Considera configurar políticas de sincronización, como las "waves" en ArgoCD, para controlar y coordinar las sincronizaciones de tus aplicaciones.
 
-### a. Creación del Repositorio:
+- Este README es solo una guía general. Asegúrate de seguir las prácticas recomendadas y adaptar la configuración a tus necesidades específicas.
 
-- En GitHub, se crea un repositorio que contiene el código fuente de la aplicación, incluyendo el Dockerfile necesario para construir la imagen de contenedor.
+## Contribución
 
-### b. Configuración del Webhook en GitHub:
+Si deseas contribuir a este proyecto o tienes sugerencias para mejoras, no dudes en abrir un issue o enviar una solicitud de extracción. ¡Tu contribución es bienvenida!
 
-- Se configura un webhook en el repositorio de GitHub para que notifique a la URL del webhook de OCP cada vez que ocurra un evento específico, como un push a una rama determinada o una solicitud de extracción (pull request).
+## Licencia
 
-## 3. Disparo de la Construcción:
-
-### a. Ocurrencia de un Evento en GitHub:
-
-- Cuando ocurre un evento definido en el repositorio de GitHub, GitHub envía una solicitud POST al webhook de OCP.
-
-### b. Recepción de la Solicitud por OCP:
-
-- OCP recibe la solicitud del webhook y, en función de la configuración del webhook trigger, activa la construcción del BC asociado.
-
-### c. Construcción de la Imagen desde GitHub:
-
-- OCP recupera el código fuente más reciente del repositorio de GitHub, incluido el Dockerfile.
-
-- Utilizando las instrucciones definidas en el Dockerfile, OCP construye la imagen de contenedor de la aplicación.
-
-## 4. Reposición de la Imagen:
-
-- Una vez que la construcción se completa con éxito, la imagen de contenedor resultante se almacena en el registro de contenedores especificado en el BC. Esto podría ser un registro externo como Quay.io.
-
-## 5. Integración Continua:
-
-- La imagen construida y almacenada está lista para su implementación en entornos de desarrollo, pruebas o producción, según sea necesario.
-
-Este flujo de trabajo automatizado asegura que cada vez que se realice un cambio en el repositorio de GitHub, OCP construirá automáticamente la imagen de contenedor correspondiente, lo que facilita la entrega continua de aplicaciones actualizadas.
+Este proyecto se encuentra bajo la Licencia [Nombre de la Licencia]. Consulta el archivo LICENSE.md para obtener más detalles.
 
