@@ -1,22 +1,12 @@
-# Usa una imagen base con un entorno de compilación de Java (por ejemplo, OpenJDK)
-FROM openjdk-11:1.17-2
-
-# Establece el usuario root
-USER root
-
-# Establece el directorio de trabajo
+# Etapa 1: Descargar el artefacto Java desde una ubicación externa
+# Cualquier imagen base de un OS (Rhel, ubuntu...)
+FROM alpine as builder
 WORKDIR /app
+RUN wget -O HelloWorld.jar https://dev.azure.com/danixxcm/_git/artifacts_ocp?path=/HelloWorld.jar
 
-# Crea el archivo Java directamente en el contenedor con el comando echo
-RUN echo 'public class HelloWorld {' >> HelloWorld.java && \
-    echo '    public static void main(String[] args) {' >> HelloWorld.java && \
-    echo '        System.out.println("Hello, World!");' >> HelloWorld.java && \
-    echo '        while (true) {}' >> HelloWorld.java && \
-    echo '    }' >> HelloWorld.java && \
-    echo '}' >> HelloWorld.java
-
-# Compila y ejecuta la aplicación Java
-RUN javac HelloWorld.java
-
-# Comando para ejecutar la aplicación Java como usuario root
-CMD ["java", "HelloWorld"]
+# Etapa 2: Construir la imagen final
+# Imagen base IST de OpenShift
+FROM openjdk-11:1.17-2
+WORKDIR /app
+COPY --from=builder /app/HelloWorld.jar /app/
+CMD ["java", "-jar", "HelloWorld.jar"]
