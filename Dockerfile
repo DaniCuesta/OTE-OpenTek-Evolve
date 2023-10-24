@@ -2,7 +2,7 @@
 # Cualquier imagen base de un OS (Rhel, ubuntu...)
 FROM alpine as builder
 WORKDIR /app
-RUN wget -O HelloWorld.jar https://dev.azure.com/danixxcm/_git/artifacts_ocp?path=/HelloWorld.jar
+RUN wget -O HelloWorld.jar https://dev.azure.com/danixxcm/_git/ocp_tests?path=/java-hello-world/HelloWorld.jar
 
 # Etapa 2: Construir la imagen final
 # Imagen base IST de OpenShift
