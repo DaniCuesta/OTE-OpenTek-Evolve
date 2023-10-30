@@ -1,14 +1,14 @@
 kind: BuildConfig
 apiVersion: build.openshift.io/v1
 metadata:
-  name: java-app-bc-demo2
+  name: java-app-bc-demo
   namespace: danicuestam-dev
 spec:
   nodeSelector: null
   output:
     to:
       kind: ImageStreamTag
-      name: 'java-app-is-demo2:stable'
+      name: 'java-app-is-demo:stable'
   resources: {}
   successfulBuildsHistoryLimit: 5
   failedBuildsHistoryLimit: 5
@@ -29,7 +29,7 @@ spec:
     images:
       - from:
           kind: ImageStreamTag
-          name: 'java-app-is-demo2:stable'
+          name: 'java-app-is-demo:stable'
         paths:
           - sourcePath: /app/HelloWorld-SNAPSHOT.jar
             destinationDir: .

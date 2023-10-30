@@ -1,7 +1,7 @@
 kind: ImageStream
 apiVersion: image.openshift.io/v1
 metadata:
-  name: java-app-is-demo2
+  name: java-app-is-demo
   namespace: danicuestam-dev
 spec:
   lookupPolicy:
@@ -11,7 +11,7 @@ spec:
       annotations: null
       from:
         kind: DockerImage
-        name: 'quay.io/danicuestam/java-app-demo2:v1.0'
+        name: 'quay.io/danicuestam/java-app-demo:v1.0'
       generation: 18
       importPolicy:
         importMode: Legacy
