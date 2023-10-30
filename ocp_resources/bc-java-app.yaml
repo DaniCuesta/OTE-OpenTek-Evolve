@@ -1,0 +1,45 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: java-app-bc-demo2
+  namespace: danicuestam-dev
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'java-app-is-demo2:stable'
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Docker
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: danicuestam-dev
+        name: 'openjdk-11:1.16-1'
+      dockerfilePath: Dockerfile
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://danixxcm@dev.azure.com/danixxcm/ocp_tests/_git/ocp_tests'
+      ref: chained-builds
+    images:
+      - from:
+          kind: ImageStreamTag
+          name: 'java-app-is-demo2:stable'
+        paths:
+          - sourcePath: /app/HelloWorld-SNAPSHOT.jar
+            destinationDir: .
+    contextDir: /
+    sourceSecret:
+      name: azure-repos-credentials
+  triggers:
+    - type: ImageChange
+      imageChange:
+        from:
+          kind: ImageStreamTag
+          name: 'openjdk-11:1.16-1'
+  runPolicy: Serial
