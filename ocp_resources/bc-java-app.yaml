@@ -8,38 +8,37 @@ spec:
   output:
     to:
       kind: ImageStreamTag
-      name: 'java-app-is-demo:stable'
-  resources: {}
-  successfulBuildsHistoryLimit: 5
-  failedBuildsHistoryLimit: 5
+      name: 'java-app-is-demo:stable'  # Specifies the name and tag of the ImageStream where the built image will be stored
+  resources: {}  # Custom resources can be defined for the build process (CPU, memory, etc.)
+  successfulBuildsHistoryLimit: 5  # Limits the number of successful builds stored in the history
+  failedBuildsHistoryLimit: 5  # Limits the number of failed builds stored in the history
   strategy:
     type: Docker
     dockerStrategy:
       from:
         kind: ImageStreamTag
         namespace: danicuestam-dev
-        name: 'openjdk-11:1.16-1'
-      dockerfilePath: Dockerfile
-  postCommit: {}
+        name: 'openjdk-11:1.16-1'  # Base image from which the Java application will be built
+      dockerfilePath: Dockerfile  # Path to the Dockerfile within the source repository
+  postCommit: {}  # Can contain custom actions to be executed after committing changes to the source repository
   source:
     type: Git
     git:
-      uri: 'https://danixxcm@dev.azure.com/danixxcm/ocp_tests/_git/ocp_tests'
-      ref: chained-builds
+      uri: 'https://danixxcm@dev.azure.com/danixxcm/ocp_tests/_git/ocp_tests'  # Source repository URL
+      ref: chained-builds  # Reference (branch, tag, etc.) in the source repository to be built
     images:
       - from:
           kind: ImageStreamTag
-          name: 'java-app-is-demo:stable'
-        paths:
-          - sourcePath: /app/HelloWorld-SNAPSHOT.jar
-            destinationDir: .
-    contextDir: /
+          name: 'java-app-is-demo:stable'  # Specifies the  ImageStreamTag from which the .jar file is retrieved
+          - sourcePath: /app/HelloWorld-SNAPSHOT.jar   # Path within the ImageStreamTag where the application's JAR file is located
+            destinationDir: .  # Destination directory within the build context
+    contextDir: /  # Directory within the source repository to be used as the context for the build
     sourceSecret:
-      name: azure-repos-credentials
+      name: azure-repos-credentials  # Secret name containing credentials to access the source repository (Azure Repos in this case)
   triggers:
     - type: ImageChange
       imageChange:
         from:
           kind: ImageStreamTag
-          name: 'openjdk-11:1.16-1'
-  runPolicy: Serial
+          name: 'openjdk-11:1.16-1'  # Specifies the base image that will trigger the build when changed
+  runPolicy: Serial  # Execution policy indicating whether builds should run serially or in parallel
