@@ -1,42 +1,56 @@
-# Repositorio Integrado con OpenShift Container Platform (OCP)
+# Proyecto de CI/CD con OpenShift Container Platform (OCP)
 
 Este repositorio está configurado para integrarse con un clúster de OpenShift Container Platform (OCP) utilizando WebHooks de acción push. Esto permite automatizar el proceso de despliegue y actualización de aplicaciones en tu clúster OCP cada vez que realizas un push a este repositorio.
 
-## Configuración del WebHook
+## Descripción de la Arquitectura
 
-La integración con OCP se logra a través de un WebHook que desencadena la acción de despliegue en el clúster. A continuación, se describen los pasos para configurar esta integración:
+La imagen a continuación representa un flujo de trabajo automatizado de CI/CD (Integración Continua y Despliegue Continuo) para el despliegue de aplicaciones usando OpenShift Container Platform (OCP).
 
-1. **Configuración del Proyecto en OCP**: Asegúrate de tener un proyecto adecuado en tu clúster OCP para desplegar las aplicaciones desde este repositorio.
+![Arquitectura CI/CD](arquitectura.png)
 
-2. **Creación del WebHook en OCP**: En tu proyecto OCP, configura un WebHook de acción push que esté asociado con este repositorio. Asegúrate de proporcionar la URL del WebHook al repositorio para que se dispare una acción de despliegue en cada push.
+### Desglose de la Arquitectura
 
-3. **Configuración de Secretos**: Si es necesario, configura secretos u otros parámetros específicos que tu aplicación pueda requerir en tu proyecto de OCP.
+#### 1. Repositorio y Aplicativo
+- **Repositorio (GitHub)**: El repositorio contiene el código fuente del AplicativoX junto con un Dockerfile.
+- **Acciones en el Repositorio**: Los desarrolladores realizan cambios en el código fuente y hacen push de estos cambios al repositorio.
 
-## Uso
+#### 2. Integración Continua (CI)
+- **BuildConfig (BC) del Proyecto Padre (ist-parent)**:
+  - `openjdk:11.1.17-2` y `openjdk:11.1.18-2` son las imágenes base en el registry de Quay.io.
+  - La actualización de estas imágenes desencadena la configuración del BuildConfig (bc-child).
 
-Una vez configurado el WebHook, el proceso de uso es bastante simple:
+#### 3. Desencadenamiento de BuildConfig e ImageStreams
+- **BuildConfig (bc-child)**:
+  - Recibe un Dockerfile como input y genera una ImageStreamTag (IST) como output.
+  - **Trigger del BC (bc-child)**: Este trigger se activa cuando hay un cambio en el ImageStreamTag (ist-child).
+- **ImageStreamTag (ist-child)**:
+  - Al actualizarse esta imagen, se activa un despliegue controlado en OCP.
 
-1. Realiza cambios en tu código fuente o configuración de la aplicación en este repositorio.
+#### 4. Despliegue en OpenShift Container Platform (OCP)
+- **Registry Interno OCP**: Las imágenes se almacenan en el registro interno de OCP.
+- **Despliegue del Contenedor (D-Child)**: Este componente despliega la aplicación usando la imagen desde el ImageStreamTag (ist-child).
+- **Despliegue en Producción (P-Child)**: Finalmente, la imagen se despliega en el entorno de producción de manera automatizada y controlada.
 
-2. Haz un push a este repositorio en la rama o rutas específicas configuradas para el despliegue.
+#### 5. WebHooks y Automatización
+- **WebHook de Acción Push**:
+  - Configurado en el repositorio para que cualquier push desencadene automáticamente la acción de despliegue.
+- **Flujo de Automatización**:
+  - Los desarrolladores hacen push en el repositorio.
+  - El WebHook detecta el push y desencadena el BuildConfig (bc-child).
+  - La nueva imagen se crea y se guarda en el registro interno de OCP.
+  - Los cambios en la imagen activan el despliegue en el entorno de desarrollo (D-Child) y luego en producción (P-Child).
 
-3. El WebHook configurado detectará el push y desencadenará la acción de despliegue en tu clúster OCP.
+#### 6. Componentes de la Imagen
+- **Componentes de Herramientas y Servicios**:
+  - GitHub: Repositorio de código fuente.
+  - Quay.io: Registro de contenedores.
+  - OCP: Plataforma de contenedores.
+  - Jenkins: Representado para tareas de CI/CD.
+  - Iconos de despliegue y producción: Representan los diferentes entornos donde se despliega la aplicación.
 
-4. Monitorea el estado del despliegue y las actualizaciones en el proyecto de OCP.
-
-## Notas Adicionales
-
-- Asegúrate de que tu clúster OCP tenga la capacidad de recibir WebHooks. Esto puede requerir configuraciones específicas en tu clúster.
-
-- Considera configurar políticas de sincronización, como las "waves" en ArgoCD, para controlar y coordinar las sincronizaciones de tus aplicaciones.
-
-- Este README es solo una guía general. Asegúrate de seguir las prácticas recomendadas y adaptar la configuración a tus necesidades específicas.
-
-## Contribución
-
-Si deseas contribuir a este proyecto o tienes sugerencias para mejoras, no dudes en abrir un issue o enviar una solicitud de extracción. ¡Tu contribución es bienvenida!
-
-## Licencia
-
-Este proyecto se encuentra bajo la Licencia [Nombre de la Licencia]. Consulta el archivo LICENSE.md para obtener más detalles.
+### Flujo Resumido
+1. **Push de Código**: Los desarrolladores realizan un push en GitHub.
+2. **WebHook Activado**: El WebHook configura el BuildConfig (bc-child) en OCP.
+3. **Generación de Imagen**: Se genera una nueva imagen y se guarda en el registro interno de OCP.
+4. **Despliegue Automatizado y Controlado**: El cambio en la imagen desencadena el despliegue en el entorno de desarrollo (D-Child) y luego en producción (P-Child), de manera controlada.
 

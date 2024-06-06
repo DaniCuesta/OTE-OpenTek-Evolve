@@ -1,4 +1,4 @@
-FROM openjdk-11:1.16-1
+FROM openjdk:latest
 WORKDIR /app
 COPY HelloWorld-SNAPSHOT.jar /app/HelloWorld-SNAPSHOT.jar
 CMD ["java", "-jar", "HelloWorld-SNAPSHOT.jar"]

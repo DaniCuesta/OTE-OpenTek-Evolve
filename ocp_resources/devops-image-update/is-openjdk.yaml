@@ -1,0 +1,14 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: openjdk
+spec:
+  tags:
+    - name: 11-1.16-2
+      from:
+        kind: DockerImage
+        name: registry.access.redhat.com/ubi9/openjdk-11:1.16-2
+    - name: latest
+      from:
+        kind: ImageStreamTag
+        name: 11-1.16-2
