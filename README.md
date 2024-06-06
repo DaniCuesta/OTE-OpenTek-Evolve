@@ -45,7 +45,7 @@ La imagen a continuación representa un flujo de trabajo automatizado de CI/CD (
   - GitHub: Repositorio de código fuente.
   - Quay.io: Registro de contenedores.
   - OCP: Plataforma de contenedores.
-  - Jenkins: Representado para tareas de CI/CD.
+  - Tekton: Representado para tareas de CI/CD.
   - Iconos de despliegue y producción: Representan los diferentes entornos donde se despliega la aplicación.
 
 ### Flujo Resumido
